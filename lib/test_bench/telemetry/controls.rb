@@ -11,3 +11,6 @@ require 'test_bench/telemetry/controls/fixture_name'
 require 'test_bench/telemetry/controls/detail_level'
 
 require 'test_bench/telemetry/controls/event'
+
+require 'test_bench/telemetry/controls/events'
+require 'test_bench/telemetry/controls/events/asserted'
