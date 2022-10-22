@@ -10,6 +10,16 @@ module TestBench
           @io = io
         end
 
+        def self.open(path, &block)
+          ::File.open(path, 'w') do |io|
+            instance = new(io)
+
+            block.(instance, io)
+
+            return instance
+          end
+        end
+
         def call(event)
           data = event.dump
 
