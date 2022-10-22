@@ -7,6 +7,7 @@ module TestBench
             include Sink
 
             extend HandlerMethod
+            extend HandleMacro
           end
         end
 
@@ -17,6 +18,23 @@ module TestBench
             handler_method
           else
             nil
+          end
+        end
+
+        module HandleMacro
+          def handle_macro(event_class, &block)
+            event_registry.register(event_class)
+
+            event_type = event_class.event_type
+
+            handler_method = HandlerMethod.get(event_type)
+
+            define_method(handler_method, &block)
+          end
+          alias :handle :handle_macro
+
+          def event_registry
+            @event_registry ||= EventRegistry.new
           end
         end
 
