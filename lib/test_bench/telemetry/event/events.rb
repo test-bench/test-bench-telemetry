@@ -20,6 +20,7 @@ module TestBench
         DetailDecreased = Event.define
 
         RunStarted = Event.define(:random_seed, :executors)
+        RunFinished = Event.define(:result, :random_seed, :executors)
       end
       include Events
     end
