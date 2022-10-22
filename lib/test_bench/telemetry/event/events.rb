@@ -21,6 +21,7 @@ module TestBench
 
         RunStarted = Event.define(:random_seed, :executors)
         RunFinished = Event.define(:result, :random_seed, :executors)
+        RunAborted = Event.define(:random_seed, :executors)
       end
       include Events
     end
