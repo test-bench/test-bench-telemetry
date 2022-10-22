@@ -1,5 +1,6 @@
 module TestBench
   class Telemetry
+    RegistrationError = Class.new(RuntimeError)
     GetError = Class.new(RuntimeError)
 
     def sinks
@@ -40,6 +41,14 @@ module TestBench
 
     def self.process_id
       ::Process.pid
+    end
+
+    def register(sink)
+      if registered?(sink)
+        raise RegistrationError, "Already registered #{sink.inspect}"
+      end
+
+      sinks.push(sink)
     end
 
     def registered?(sink_or_sink_class)
