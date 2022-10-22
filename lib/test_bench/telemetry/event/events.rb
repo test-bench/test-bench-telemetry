@@ -24,6 +24,7 @@ module TestBench
         RunAborted = Event.define(:random_seed, :executors)
 
         FileEntered = Event.define(:path, :executor)
+        FileExited = Event.define(:result, :path, :executor)
       end
       include Events
     end
