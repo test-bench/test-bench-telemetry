@@ -25,6 +25,8 @@ module TestBench
 
         FileEntered = Event.define(:path, :executor)
         FileExited = Event.define(:result, :path, :executor)
+
+        FixtureStarted = Event.define(:name)
       end
       include Events
     end
