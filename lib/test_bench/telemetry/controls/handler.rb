@@ -55,7 +55,21 @@ module TestBench
           end
         end
 
-        Example = example_class
+        Example = example_class do
+          attr_accessor :data
+
+          handle Event::Example do |data|
+            self.data = data
+          end
+
+          def handled?(data=nil)
+            if data.nil?
+              !self.data.nil?
+            else
+              data == self.data
+            end
+          end
+        end
       end
     end
   end
