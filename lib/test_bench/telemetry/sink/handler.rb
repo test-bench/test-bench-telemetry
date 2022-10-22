@@ -13,6 +13,12 @@ module TestBench
           end
         end
 
+        def handle?(event_or_event_type)
+          handler_method = handler_method(event_or_event_type)
+
+          not handler_method.nil?
+        end
+
         def handler_method(event_or_event_type)
           handler_method = self.class.handler_method(event_or_event_type)
 
