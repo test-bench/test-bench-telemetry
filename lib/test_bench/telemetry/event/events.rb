@@ -5,6 +5,8 @@ module TestBench
         Asserted = Event.define(:result, :path, :line_number)
 
         ErrorRaised = Event.define(:error_text)
+
+        TestStarted = Event.define(:title)
       end
       include Events
     end
