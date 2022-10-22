@@ -13,3 +13,5 @@ require 'test_bench/telemetry/sink/capture/record/generate'
 require 'test_bench/telemetry/sink/capture'
 
 require 'test_bench/telemetry/sink/file'
+
+require 'test_bench/telemetry/telemetry'
