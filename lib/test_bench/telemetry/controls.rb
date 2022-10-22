@@ -12,3 +12,4 @@ require 'test_bench/telemetry/controls/event'
 require 'test_bench/telemetry/controls/event/metadata'
 
 require 'test_bench/telemetry/controls/sink'
+require 'test_bench/telemetry/controls/handler'
