@@ -15,6 +15,8 @@ module TestBench
         ContextSkipped = Event.define(:title)
 
         Commented = Event.define(:comment)
+
+        DetailIncreased = Event.define
       end
       include Events
     end
