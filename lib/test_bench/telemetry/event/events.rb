@@ -9,6 +9,8 @@ module TestBench
         TestStarted = Event.define(:title)
         TestFinished = Event.define(:result, :title)
         TestSkipped = Event.define(:title)
+
+        ContextEntered = Event.define(:title)
       end
       include Events
     end
