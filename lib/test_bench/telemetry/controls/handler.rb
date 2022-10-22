@@ -10,9 +10,14 @@ module TestBench
           include Telemetry::Sink::Handler
 
           attr_accessor :handled_event
+          attr_accessor :handled_event_data
 
           handle Event::SomeEvent do |some_event|
             self.handled_event = some_event
+          end
+
+          def handle_event_data(event_data)
+            self.handled_event_data = event_data
           end
 
           def handled?(event=nil)
@@ -21,6 +26,37 @@ module TestBench
             return true if event.nil?
 
             event == handled_event
+          end
+
+          def handled_event_data?(event_data)
+            self.handled_event_data == event_data
+          end
+        end
+
+        module NoHandler
+          def self.example
+            Example.new
+          end
+
+          class Example
+            include Telemetry::Sink::Handler
+          end
+        end
+
+        module NoArgument
+          def self.example
+            Example.new
+          end
+
+          class Example
+            include Telemetry::Sink::Handler
+
+            attr_accessor :handled_event
+            def handled? = !!handled_event
+
+            handle Event::SomeEvent do
+              self.handled_event = true
+            end
           end
         end
 
