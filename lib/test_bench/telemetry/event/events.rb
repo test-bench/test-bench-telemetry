@@ -7,6 +7,7 @@ module TestBench
         ErrorRaised = Event.define(:error_text)
 
         TestStarted = Event.define(:title)
+        TestFinished = Event.define(:result, :title)
       end
       include Events
     end
