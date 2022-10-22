@@ -11,6 +11,30 @@ module TestBench
           end
         end
 
+        def handle(event_or_event_data)
+          handles = handle?(event_or_event_data)
+
+          if handles
+            if event_or_event_data.is_a?(Event)
+              event = event_or_event_data
+            else
+              event_data = event_or_event_data
+              event_type = event_data.type
+              event_class = self.class.event_registry.get(event_type)
+
+              event = Event::Import.(event_data, event_class)
+            end
+
+            handler_method = handler_method(event)
+
+            __send__(handler_method, event)
+
+            event
+          else
+            nil
+          end
+        end
+
         def handle?(...)
           handler_method = handler_method(...)
 
