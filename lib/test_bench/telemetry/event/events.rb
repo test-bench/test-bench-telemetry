@@ -12,6 +12,7 @@ module TestBench
 
         ContextEntered = Event.define(:title)
         ContextExited = Event.define(:result, :title)
+        ContextSkipped = Event.define(:title)
       end
       include Events
     end
