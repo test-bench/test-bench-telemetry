@@ -17,6 +17,7 @@ module TestBench
         Commented = Event.define(:comment)
 
         DetailIncreased = Event.define
+        DetailDecreased = Event.define
       end
       include Events
     end
