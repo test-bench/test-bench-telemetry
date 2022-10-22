@@ -13,6 +13,32 @@ module TestBench
           end
         end
 
+        def handle(event)
+          handles = handle?(event)
+
+          if handles
+            handler_method = handler_method(event)
+
+            parameters = method(handler_method).parameters
+
+            final_parameter_type, _ = parameters.last
+            if not final_parameter_type == :rest
+              parameter_count = parameters.count
+
+              arguments = event.values[0...parameter_count]
+            else
+              arguments = event.values
+            end
+
+            __send__(handler_method, *arguments)
+
+            true
+          else
+            false
+          end
+        end
+        alias :call :handle
+
         def handle?(event_or_event_type)
           handler_method = handler_method(event_or_event_type)
 
