@@ -14,3 +14,4 @@ require 'test_bench/telemetry/controls/event'
 
 require 'test_bench/telemetry/controls/events'
 require 'test_bench/telemetry/controls/events/asserted'
+require 'test_bench/telemetry/controls/events/error_raised'
