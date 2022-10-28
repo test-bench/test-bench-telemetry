@@ -17,6 +17,16 @@ module TestBench
         self.class.event_type
       end
 
+      def dump
+        Serialization.dump(self)
+      end
+
+      def self.load(data, event_namespace=nil)
+        event_namespace ||= Events
+
+        Serialization.load(data, event_namespace)
+      end
+
       module EventType
         def event_type
           @event_type ||= Type.get(name)
