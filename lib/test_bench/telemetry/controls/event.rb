@@ -4,8 +4,11 @@ module TestBench
       module Event
         def self.example
           event = Example.new
+          event.time = time
           event
         end
+
+        def self.time = Time.example
 
         SomeEvent = TestBench::Telemetry::Event.define(
           :some_optional
@@ -25,7 +28,9 @@ module TestBench
           def self.example(event_type: nil)
             event_type ||= SomeEvent.event_type
 
-            %{#{event_type}\t\t\r\n}
+            time_iso8601 = Time::ISO8601.example
+
+            %{#{event_type}\t\t#{time_iso8601}\r\n}
           end
 
           module Malformed

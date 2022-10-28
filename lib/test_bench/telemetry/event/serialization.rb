@@ -24,6 +24,8 @@ module TestBench
           case value
           when NilClass
             ''
+          when Time
+            value.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
           end
         end
 
@@ -51,6 +53,18 @@ module TestBench
 
           if match_data['nil']
             nil
+          elsif match_data['time']
+            year = match_data['year'].to_i
+            month = match_data['month'].to_i
+            day = match_data['day'].to_i
+            hour = match_data['hour'].to_i
+            minute = match_data['minute'].to_i
+            second = match_data['second'].to_i
+
+            nanosecond = match_data['nanosecond'].to_i
+            usec = Rational(nanosecond, 1_000)
+
+            Time.utc(year, month, day, hour, minute, second, usec)
           end
         end
 
@@ -78,11 +92,23 @@ module TestBench
           end
 
           def self.value
-            %r{#{self.nil}}
+            %r{#{self.nil}|#{time}}
           end
 
           def self.nil
             %r{(?<nil>(?=[\n\t])?)}
+          end
+
+          def self.time
+            year = %r{(?<year>[[:digit:]]{4})}
+            month = %r{(?<month>[[:digit:]]{2})}
+            day = %r{(?<day>[[:digit:]]{2})}
+            hour = %r{(?<hour>[[:digit:]]{2})}
+            minute = %r{(?<minute>[[:digit:]]{2})}
+            second = %r{(?<second>[[:digit:]]{2})}
+            nanosecond = %r{(?<nanosecond>[[:digit:]]{9})}
+
+            %r{(?<time>#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}\.#{nanosecond}Z)}
           end
         end
       end
