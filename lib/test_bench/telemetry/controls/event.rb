@@ -8,17 +8,23 @@ module TestBench
           event = Example.new
           event.some_string = some_string
           event.some_integer = some_integer
+          event.some_boolean = some_boolean
+          event.some_other_boolean = some_other_boolean
           event.time = time
           event
         end
 
         def self.some_string = 'some-string'
         def self.some_integer = 11
+        def self.some_boolean = true
+        def self.some_other_boolean = false
         def self.time = Time.example
 
         SomeEvent = TestBench::Telemetry::Event.define(
           :some_string,
           :some_integer,
+          :some_boolean,
+          :some_other_boolean,
           :some_optional
         )
         Example = SomeEvent
@@ -38,7 +44,7 @@ module TestBench
 
             time_iso8601 = Time::ISO8601.example
 
-            %{#{event_type}\t"some-string"\t11\t\t#{time_iso8601}\r\n}
+            %{#{event_type}\t"some-string"\t11\ttrue\tfalse\t\t#{time_iso8601}\r\n}
           end
 
           module Malformed

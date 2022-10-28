@@ -30,6 +30,8 @@ module TestBench
             value.dump
           when Integer
             value.to_s
+          when TrueClass, FalseClass
+            value.to_s
           end
         end
 
@@ -73,6 +75,10 @@ module TestBench
             value_data.undump
           elsif match_data['integer']
             Integer(value_data)
+          elsif match_data['true']
+            true
+          elsif match_data['false']
+            false
           end
         end
 
@@ -100,7 +106,7 @@ module TestBench
           end
 
           def self.value
-            %r{#{self.nil}|#{time}|#{string}|#{integer}}
+            %r{#{self.nil}|#{time}|#{string}|#{integer}|#{boolean}}
           end
 
           def self.nil
@@ -125,6 +131,10 @@ module TestBench
 
           def self.integer
             %r{(?<integer>[[:digit:]]+)}
+          end
+
+          def self.boolean
+            %r{(?<true>true)|(?<false>false)}
           end
         end
       end
