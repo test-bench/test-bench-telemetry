@@ -13,6 +13,10 @@ module TestBench
         end
       end
 
+      def self.each_event_type(&block)
+        Events.constants(false).each(&block)
+      end
+
       def event_type
         self.class.event_type
       end
