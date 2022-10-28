@@ -28,6 +28,8 @@ module TestBench
             value.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
           when String
             value.dump
+          when Integer
+            value.to_s
           end
         end
 
@@ -69,6 +71,8 @@ module TestBench
             Time.utc(year, month, day, hour, minute, second, usec)
           elsif match_data['string']
             value_data.undump
+          elsif match_data['integer']
+            Integer(value_data)
           end
         end
 
@@ -96,7 +100,7 @@ module TestBench
           end
 
           def self.value
-            %r{#{self.nil}|#{time}|#{string}}
+            %r{#{self.nil}|#{time}|#{string}|#{integer}}
           end
 
           def self.nil
@@ -117,6 +121,10 @@ module TestBench
 
           def self.string
             %r{(?<string>".*")}
+          end
+
+          def self.integer
+            %r{(?<integer>[[:digit:]]+)}
           end
         end
       end
