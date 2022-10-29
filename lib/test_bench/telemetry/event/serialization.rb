@@ -26,6 +26,8 @@ module TestBench
             ''
           when Time
             value.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
+          when String
+            value.dump
           end
         end
 
@@ -65,6 +67,8 @@ module TestBench
             usec = Rational(nanosecond, 1_000)
 
             Time.utc(year, month, day, hour, minute, second, usec)
+          elsif match_data['string']
+            value_data.undump
           end
         end
 
@@ -92,7 +96,7 @@ module TestBench
           end
 
           def self.value
-            %r{#{self.nil}|#{time}}
+            %r{#{self.nil}|#{time}|#{string}}
           end
 
           def self.nil
@@ -109,6 +113,10 @@ module TestBench
             nanosecond = %r{(?<nanosecond>[[:digit:]]{9})}
 
             %r{(?<time>#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}\.#{nanosecond}Z)}
+          end
+
+          def self.string
+            %r{(?<string>".*")}
           end
         end
       end

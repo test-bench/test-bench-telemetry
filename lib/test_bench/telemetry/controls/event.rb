@@ -2,15 +2,20 @@ module TestBench
   class Telemetry
     module Controls
       module Event
-        def self.example
+        def self.example(some_string=nil)
+          some_string ||= self.some_string
+
           event = Example.new
+          event.some_string = some_string
           event.time = time
           event
         end
 
+        def self.some_string = 'some-string'
         def self.time = Time.example
 
         SomeEvent = TestBench::Telemetry::Event.define(
+          :some_string,
           :some_optional
         )
         Example = SomeEvent
@@ -30,7 +35,7 @@ module TestBench
 
             time_iso8601 = Time::ISO8601.example
 
-            %{#{event_type}\t\t#{time_iso8601}\r\n}
+            %{#{event_type}\t"some-string"\t\t#{time_iso8601}\r\n}
           end
 
           module Malformed
