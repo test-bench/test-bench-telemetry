@@ -4,6 +4,8 @@ module TestBench
       class Capture
         include Sink
 
+        MatchError = Class.new(RuntimeError)
+
         def raw_records
           @raw_records ||= []
         end
@@ -19,6 +21,16 @@ module TestBench
           raw_records.push(record)
 
           record
+        end
+
+        def one_record(...)
+          records = records(...)
+
+          if records.count > 1
+            raise MatchError, "More than one record matches (Matching Records: #{records.count})"
+          end
+
+          records.first
         end
 
         def any_record?(...)
