@@ -3,6 +3,20 @@ module TestBench
     module Sink
       class Capture
         Record = Struct.new(:event, :path, :detail_level) do
+          def match?(*path_segments, detail: nil, detail_level: nil, &block)
+            if not path_segments?(*path_segments)
+              false
+            elsif not detail?(detail)
+              false
+            elsif not detail_level?(detail_level)
+              false
+            elsif not block?(&block)
+              false
+            else
+              true
+            end
+          end
+
           def detail_match?(match)
             if match.nil?
               true
