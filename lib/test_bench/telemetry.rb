@@ -9,3 +9,4 @@ require 'test_bench/telemetry/sink/handler'
 
 require 'test_bench/telemetry/sink/capture/path'
 require 'test_bench/telemetry/sink/capture/record'
+require 'test_bench/telemetry/sink/capture/record/generate'
