@@ -35,3 +35,4 @@ require 'test_bench/telemetry/controls/events/fixture_finished'
 require 'test_bench/telemetry/controls/handler'
 
 require 'test_bench/telemetry/controls/capture_sink/path'
+require 'test_bench/telemetry/controls/capture_sink/record'
