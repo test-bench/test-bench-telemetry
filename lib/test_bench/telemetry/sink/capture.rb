@@ -21,6 +21,11 @@ module TestBench
           record
         end
 
+        def any_record?(...)
+          records(...).any?
+        end
+        alias :record? :any_record?
+
         def records(...)
           raw_records.select do |record|
             record.match?(...)
