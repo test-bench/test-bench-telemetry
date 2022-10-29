@@ -50,6 +50,10 @@ module TestBench
             path
           end
 
+          def copy?(compare_path)
+            eql?(compare_path) && !equal?(compare_path)
+          end
+
           def eql?(compare)
             if compare.is_a?(self.class)
               segments == compare.segments
