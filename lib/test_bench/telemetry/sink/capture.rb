@@ -20,6 +20,12 @@ module TestBench
 
           record
         end
+
+        def records(...)
+          raw_records.select do |record|
+            record.match?(...)
+          end
+        end
       end
     end
   end
