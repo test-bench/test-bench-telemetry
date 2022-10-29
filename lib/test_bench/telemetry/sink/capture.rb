@@ -23,6 +23,12 @@ module TestBench
           record
         end
 
+        def one_record?(...)
+          record = one_record(...)
+
+          !record.nil?
+        end
+
         def one_record(...)
           records = records(...)
 
