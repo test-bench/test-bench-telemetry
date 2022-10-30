@@ -15,3 +15,5 @@ require 'test_bench/telemetry/sink/capture'
 require 'test_bench/telemetry/sink/file'
 
 require 'test_bench/telemetry/telemetry'
+
+require 'test_bench/telemetry/substitute'
