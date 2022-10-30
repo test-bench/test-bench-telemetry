@@ -14,3 +14,4 @@ require 'test_bench/telemetry/sink/projection'
 require 'test_bench/telemetry/telemetry'
 
 require 'test_bench/telemetry/substitute/sink'
+require 'test_bench/telemetry/substitute'
