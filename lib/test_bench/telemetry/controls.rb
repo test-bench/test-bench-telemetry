@@ -36,3 +36,5 @@ require 'test_bench/telemetry/controls/handler'
 
 require 'test_bench/telemetry/controls/capture_sink/path'
 require 'test_bench/telemetry/controls/capture_sink/record'
+
+require 'test_bench/telemetry/controls/sink'
