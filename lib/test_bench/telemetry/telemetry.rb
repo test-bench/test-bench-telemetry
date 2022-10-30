@@ -8,6 +8,23 @@ module TestBench
     end
     attr_writer :sinks
 
+    def self.build(*sinks)
+      instance = new
+
+      sinks.each do |sink|
+        instance.register(sink)
+      end
+
+      instance
+    end
+
+    def self.configure(receiver, *sinks, attr_name: nil)
+      attr_name ||= :telemetry
+
+      instance = build(*sinks)
+      receiver.public_send(:"#{attr_name}=", instance)
+    end
+
     def record(event)
       if event.is_a?(Event)
         event.metadata ||= Event::Metadata.new
