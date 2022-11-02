@@ -20,6 +20,7 @@ module TestBench
           instance
         end
 
+        def events(...) = sink.events(...)
         def recorded?(...) = sink.received?(...)
       end
     end
