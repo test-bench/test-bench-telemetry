@@ -20,6 +20,7 @@ module TestBench
           instance
         end
 
+        def one_event(...) = sink.one_event(...)
         def any_event?(...) = sink.any_event?(...)
         alias :event? :any_event?
         def events(...) = sink.events(...)
