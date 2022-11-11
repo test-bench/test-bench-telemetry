@@ -18,6 +18,10 @@ module TestBench
           received_events.include?(event_data)
         end
 
+        def one_event?(...)
+          !one_event(...).nil?
+        end
+
         def one_event(...)
           events = events(...)
 
