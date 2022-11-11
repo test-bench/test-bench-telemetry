@@ -2,6 +2,8 @@ module TestBench
   class Telemetry
     module Substitute
       class Sink
+        MatchError = Class.new(RuntimeError)
+
         include Telemetry::Sink
 
         def received_events
@@ -10,6 +12,17 @@ module TestBench
 
         def receive(event_data)
           received_events << event_data
+        end
+
+        def one_event(...)
+          events = events(...)
+
+          if events.count > 1
+            event_type = events.first.event_type
+            raise MatchError, "More than one event matches (Type: #{event_type.inspect}, Matching Events: #{events.count})"
+          end
+
+          events.first
         end
 
         def any_event?(...)
