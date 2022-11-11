@@ -16,6 +16,11 @@ module TestBench
           received_events.include?(event_data)
         end
 
+        def any_event?(...)
+          events(...).any?
+        end
+        alias :event? :any_event?
+
         def events(event_class, **attributes)
           event_type = event_class.event_type
 
