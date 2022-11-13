@@ -51,6 +51,14 @@ module TestBench
       sinks.push(sink)
     end
 
+    def unregister(sink)
+      deleted_sink = sinks.delete(sink)
+
+      if deleted_sink.nil?
+        raise RegistrationError, "Not registered #{sink.inspect}"
+      end
+    end
+
     def registered?(sink_or_sink_class)
       if sink_or_sink_class.is_a?(Sink)
         sink = sink_or_sink_class
