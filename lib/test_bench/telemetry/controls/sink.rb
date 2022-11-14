@@ -6,6 +6,10 @@ module TestBench
           Example.new
         end
 
+        def self.other_example
+          OtherExample.new
+        end
+
         class Example
           include Telemetry::Sink
 
@@ -18,6 +22,10 @@ module TestBench
           def received?(event_data)
             self.received_event_data == event_data
           end
+        end
+
+        class OtherExample
+          include Telemetry::Sink
         end
       end
     end
