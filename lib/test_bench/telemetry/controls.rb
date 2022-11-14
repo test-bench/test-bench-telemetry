@@ -5,3 +5,5 @@ require 'test_bench/telemetry/controls/time'
 
 require 'test_bench/telemetry/controls/event_data'
 require 'test_bench/telemetry/controls/event'
+
+require 'test_bench/telemetry/controls/sink'
