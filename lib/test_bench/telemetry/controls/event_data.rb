@@ -2,11 +2,13 @@ module TestBench
   class Telemetry
     module Controls
       module EventData
-        def self.example(type: nil)
+        def self.example(type: nil, process_id: nil)
           type ||= self.type
+          process_id ||= self.process_id
 
           event_data = Telemetry::EventData.new
           event_data.type = type
+          event_data.process_id = process_id
           event_data
         end
 
@@ -18,11 +20,16 @@ module TestBench
           Type.example
         end
 
-        module Random
-          def self.example(type: nil)
-            type ||= Type.random
+        def self.process_id
+          ProcessID.example
+        end
 
-            EventData.example(type:)
+        module Random
+          def self.example(type: nil, process_id: nil)
+            type ||= Type.random
+            process_id ||= ProcessID.random
+
+            EventData.example(type:, process_id:)
           end
         end
 
@@ -41,15 +48,18 @@ module TestBench
         end
 
         module Text
-          def self.example(type: nil)
+          def self.example(type: nil, process_id: nil)
             type ||= EventData.type
+            process_id ||= EventData.process_id
 
-            "#{type}\r\n"
+            "#{type}\t#{process_id}\r\n"
           end
 
           module Malformed
             module Empty
-              def self.example = ''
+              def self.example
+                ''
+              end
             end
 
             module IncorrectEventType
@@ -57,7 +67,9 @@ module TestBench
                 Text.example(type:)
               end
 
-              def self.type = :not_pascal_cased
+              def self.type
+                :not_pascal_cased
+              end
             end
 
             module IncorrectNewlines
