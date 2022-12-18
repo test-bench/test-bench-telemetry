@@ -68,7 +68,8 @@ module TestBench
               true,
               false,
               11,
-              'some-string'
+              'some-string',
+              Time.example
             ]
           end
 
@@ -78,7 +79,8 @@ module TestBench
               Controls::Random.boolean,
               Controls::Random.boolean,
               Controls::Random.integer,
-              Controls::Random.string
+              Controls::Random.string,
+              Time.random
             ]
           end
         end
@@ -91,7 +93,7 @@ module TestBench
 
             time_iso8601 = Time::ISO8601.example(time)
 
-            "#{type}\t#{process_id}\t#{time_iso8601}\t\ttrue\tfalse\t11\t\"some-string\"\r\n"
+            "#{type}\t#{process_id}\t#{time_iso8601}\t\ttrue\tfalse\t11\t\"some-string\"\t#{time_iso8601}\r\n"
           end
 
           module Malformed
