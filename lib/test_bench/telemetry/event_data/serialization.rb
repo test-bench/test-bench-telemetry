@@ -8,6 +8,7 @@ module TestBench
           type = event_data.type.to_s
           process_id = dump_value(event_data.process_id)
           time = dump_value(event_data.time)
+          data = event_data.data
 
           text = String.new(encoding: 'BINARY')
 
@@ -19,6 +20,11 @@ module TestBench
           text << "\t"
           text << time
 
+          data.each do |value|
+            text << "\t"
+            text << dump_value(value)
+          end
+
           text << "\r\n"
           text
         end
@@ -29,6 +35,8 @@ module TestBench
             value.to_s
           when Time
             value.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
+          when NilClass
+            ''
           end
         end
 
@@ -41,11 +49,17 @@ module TestBench
           type = match_data['type'].to_sym
           process_id = load_value(match_data['process_id'])
           time = load_value(match_data['time_attribute'])
+          data_text = match_data['data']
 
           event_data = EventData.new
           event_data.type = type
           event_data.process_id = process_id
           event_data.time = time
+          event_data.data = []
+
+          final_value = load_value(data_text)
+          event_data.data << final_value
+
           event_data
         end
 
@@ -66,6 +80,8 @@ module TestBench
             usec = Rational(nanosecond, 1_000)
 
             Time.utc(year, month, day, hour, minute, second, usec)
+          elsif match_data['nil']
+            nil
           end
         end
 
@@ -81,7 +97,7 @@ module TestBench
           end
 
           def self.event_data
-            %r{\A#{type}\t#{process_id}\t#{time_attribute}\r\n\z}
+            %r{\A#{type}\t#{process_id}\t#{time_attribute}\t#{data}\r\n\z}
           end
 
           def self.type
@@ -96,8 +112,12 @@ module TestBench
             %r{(?<time_attribute>#{time})}
           end
 
+          def self.data
+            %r{(?<data>#{value}(?:\t#{value})*)}
+          end
+
           def self.value
-            %r{#{integer}|#{time}}
+            %r{#{integer}|#{time}|#{self.nil}}
           end
 
           def self.integer
@@ -114,6 +134,10 @@ module TestBench
             nanosecond = %r{(?<nanosecond>[[:digit:]]{9})}
 
             %r{(?<time>#{year}-#{month}-#{day}T#{hour}:#{minute}:#{second}\.#{nanosecond}Z)}
+          end
+
+          def self.nil
+            %r{(?<nil>(?=[\t\r\z])?)}
           end
         end
       end
