@@ -2,21 +2,25 @@ module TestBench
   class Telemetry
     module Controls
       module EventData
-        def self.example(type: nil)
+        def self.example(type: nil, process_id: nil)
           type ||= self.type
+          process_id ||= self.process_id
 
           event_data = Telemetry::EventData.new
           event_data.type = type
+          event_data.process_id = process_id
           event_data
         end
 
         def self.random
           type = Type.random
+          process_id = ProcessID.random
 
-          example(type:)
+          example(type:, process_id:)
         end
 
         def self.type = Type.example
+        def self.process_id = ProcessID.example
 
         module Type
           def self.example = :SomeEvent
@@ -25,10 +29,11 @@ module TestBench
         end
 
         module Text
-          def self.example(type: nil)
+          def self.example(type: nil, process_id: nil)
             type ||= EventData.type
+            process_id ||= EventData.process_id
 
-            "#{type}\r\n"
+            "#{type}\t#{process_id}\r\n"
           end
 
           module Malformed
