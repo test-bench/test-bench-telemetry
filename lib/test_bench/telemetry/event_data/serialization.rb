@@ -37,6 +37,8 @@ module TestBench
             value.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
           when NilClass
             ''
+          when TrueClass, FalseClass
+            value.to_s
           end
         end
 
@@ -56,6 +58,15 @@ module TestBench
           event_data.process_id = process_id
           event_data.time = time
           event_data.data = []
+
+          if data_text.include?("\t")
+            *value_texts, data_text = data_text.split("\t")
+
+            value_texts.each do |value_text|
+              value = load_value(value_text)
+              event_data.data << value
+            end
+          end
 
           final_value = load_value(data_text)
           event_data.data << final_value
@@ -82,6 +93,10 @@ module TestBench
             Time.utc(year, month, day, hour, minute, second, usec)
           elsif match_data['nil']
             nil
+          elsif match_data['true']
+            true
+          elsif match_data['false']
+            false
           end
         end
 
@@ -117,7 +132,7 @@ module TestBench
           end
 
           def self.value
-            %r{#{integer}|#{time}|#{self.nil}}
+            %r{#{integer}|#{time}|#{self.nil}|#{boolean}}
           end
 
           def self.integer
@@ -138,6 +153,10 @@ module TestBench
 
           def self.nil
             %r{(?<nil>(?=[\t\r\z])?)}
+          end
+
+          def self.boolean
+            %r{(?<true>true)|(?<false>false)}
           end
         end
       end
