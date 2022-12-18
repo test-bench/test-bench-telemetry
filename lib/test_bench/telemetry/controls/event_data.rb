@@ -66,7 +66,8 @@ module TestBench
             [
               nil,
               true,
-              false
+              false,
+              11
             ]
           end
 
@@ -74,7 +75,8 @@ module TestBench
             [
               nil,
               Controls::Random.boolean,
-              Controls::Random.boolean
+              Controls::Random.boolean,
+              Controls::Random.integer
             ]
           end
         end
@@ -87,7 +89,7 @@ module TestBench
 
             time_iso8601 = Time::ISO8601.example(time)
 
-            "#{type}\t#{process_id}\t#{time_iso8601}\t\ttrue\tfalse\r\n"
+            "#{type}\t#{process_id}\t#{time_iso8601}\t\ttrue\tfalse\t11\r\n"
           end
 
           module Malformed
