@@ -39,6 +39,8 @@ module TestBench
             ''
           when TrueClass, FalseClass
             value.to_s
+          when String
+            value.dump
           end
         end
 
@@ -97,6 +99,8 @@ module TestBench
             true
           elsif match_data['false']
             false
+          elsif match_data['string']
+            value_text.undump
           end
         end
 
@@ -132,7 +136,7 @@ module TestBench
           end
 
           def self.value
-            %r{#{integer}|#{time}|#{self.nil}|#{boolean}}
+            %r{#{integer}|#{time}|#{self.nil}|#{boolean}|#{string}}
           end
 
           def self.integer
@@ -157,6 +161,10 @@ module TestBench
 
           def self.boolean
             %r{(?<true>true)|(?<false>false)}
+          end
+
+          def self.string
+            %r{(?<string>".*")}
           end
         end
       end

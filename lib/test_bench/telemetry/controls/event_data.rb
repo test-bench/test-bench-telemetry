@@ -42,7 +42,8 @@ module TestBench
               nil,
               true,
               false,
-              11
+              11,
+              'some-string'
             ]
           end
 
@@ -51,7 +52,8 @@ module TestBench
               nil,
               Random.boolean,
               Random.boolean,
-              Random.integer
+              Random.integer,
+              "some-string-#{Random.string}"
             ]
           end
         end
@@ -64,7 +66,7 @@ module TestBench
 
             time_iso8601 = Time::ISO8601.example(time)
 
-            "#{type}\t#{process_id}\t#{time_iso8601}\t\ttrue\tfalse\t11\r\n"
+            "#{type}\t#{process_id}\t#{time_iso8601}\t\ttrue\tfalse\t11\t\"some-string\"\r\n"
           end
 
           module Malformed
