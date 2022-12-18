@@ -2,6 +2,8 @@ module TestBench
   class Telemetry
     module Controls
       module Event
+        extend EventData
+
         def self.example(some_attribute: nil, some_other_attribute: nil, event_class: nil, metadata: nil, process_id: nil, time: nil)
           some_attribute ||= self.some_attribute
           some_other_attribute ||= self.some_other_attribute
@@ -48,6 +50,8 @@ module TestBench
         SomeOtherEvent = TestBench::Telemetry::Event.define(:some_attribute, :some_other_attribute)
 
         module Other
+          extend EventData
+
           def self.example(some_attribute: nil, some_other_attribute: nil, metadata: nil, process_id: nil, time: nil)
             some_attribute ||= self.some_attribute
             some_other_attribute ||= self.some_other_attribute
@@ -70,6 +74,8 @@ module TestBench
         end
 
         module Random
+          extend EventData
+
           def self.example(some_attribute: nil, some_other_attribute: nil, event_class: nil, metadata: nil, process_id: nil, time: nil)
             some_attribute ||= self.some_attribute
             some_other_attribute ||= self.some_other_attribute
