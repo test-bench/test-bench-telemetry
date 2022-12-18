@@ -54,11 +54,11 @@ module TestBench
         end
 
         def self.other_example
-          example(offset_nanoseconds: 111_111_111)
+          Other.example
         end
 
         def self.random
-          example(offset_nanoseconds: Random.integer)
+          Random.example
         end
 
         module ISO8601
@@ -78,6 +78,43 @@ module TestBench
             time = Time.random
 
             example(time)
+          end
+        end
+
+        module Offset
+          def self.example
+            Time.example(offset_nanoseconds:)
+          end
+
+          def self.offset_nanoseconds
+            Elapsed.nanoseconds
+          end
+        end
+        Other = Offset
+
+        module Random
+          def self.example
+            offset_nanoseconds = Controls::Random.integer
+
+            Time.example(offset_nanoseconds:)
+          end
+        end
+
+        module Elapsed
+          def self.example
+            seconds
+          end
+
+          def self.nanoseconds
+            111_111_111
+          end
+
+          def self.milliseconds
+            111.111_111
+          end
+
+          def self.seconds
+            0.111_111_111
           end
         end
       end
