@@ -36,6 +36,39 @@ module TestBench
         SomeEvent = TestBench::Telemetry::Event.define(:some_attribute, :some_other_attribute)
         SomeOtherEvent = TestBench::Telemetry::Event.define(:some_attribute, :some_other_attribute)
 
+        module EventData
+          def self.example(data: nil, type: nil, process_id: nil, time: nil)
+            data ||= self.data
+
+            Controls::EventData.example(type:, process_id:, time:, data:)
+          end
+
+          def self.other_example = Other.example
+          def self.random = Random.example
+
+          def self.data = Data.example
+
+          module Other
+            def self.example
+              EventData.example(type:, process_id:, time:)
+            end
+
+            def self.type = SomeOtherEvent.event_type
+            def self.process_id = Metadata::Other.process_id
+            def self.time = Metadata::Other.time
+          end
+
+          module Random
+            def self.example
+              data = Data.random
+              process_id = ProcessID.random
+              time = Time.random
+
+              EventData.example(data:, process_id:, time:)
+            end
+          end
+        end
+
         module Data
           def self.example
             [some_attribute, some_other_attribute]
