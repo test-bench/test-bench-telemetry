@@ -64,13 +64,17 @@ module TestBench
         module Data
           def self.example
             [
-              nil
+              nil,
+              true,
+              false
             ]
           end
 
           def self.random
             [
-              nil
+              nil,
+              Controls::Random.boolean,
+              Controls::Random.boolean
             ]
           end
         end
@@ -83,7 +87,7 @@ module TestBench
 
             time_iso8601 = Time::ISO8601.example(time)
 
-            "#{type}\t#{process_id}\t#{time_iso8601}\t\r\n"
+            "#{type}\t#{process_id}\t#{time_iso8601}\t\ttrue\tfalse\r\n"
           end
 
           module Malformed

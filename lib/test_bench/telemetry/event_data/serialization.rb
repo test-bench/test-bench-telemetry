@@ -37,6 +37,8 @@ module TestBench
             value.strftime('%Y-%m-%dT%H:%M:%S.%NZ')
           when NilClass
             ''
+          when TrueClass, FalseClass
+            value.to_s
           end
         end
 
@@ -86,6 +88,10 @@ module TestBench
             Time.utc(year, month, day, hour, minute, second, usec)
           elsif match_data['nil']
             nil
+          elsif match_data['true']
+            true
+          elsif match_data['false']
+            false
           end
         end
 
@@ -121,7 +127,7 @@ module TestBench
           end
 
           def self.value
-            @value ||= %r{#{integer}|#{time}|#{self.nil}}
+            @value ||= %r{#{integer}|#{time}|#{self.nil}|#{boolean}}
           end
 
           def self.integer
@@ -146,6 +152,10 @@ module TestBench
 
           def self.nil
             @nil ||= %r{(?<nil>(?=[\t\r\z])?)}
+          end
+
+          def self.boolean
+            @boolean ||= %r{(?<true>true)|(?<false>false)}
           end
         end
       end
