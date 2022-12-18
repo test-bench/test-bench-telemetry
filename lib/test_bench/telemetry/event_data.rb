@@ -1,6 +1,6 @@
 module TestBench
   class Telemetry
-    EventData = Struct.new(:type, :process_id) do
+    EventData = Struct.new(:type, :process_id, :time) do
       def self.load(text)
         EventData::Serialization.load(text)
       end
