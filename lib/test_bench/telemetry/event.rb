@@ -69,6 +69,24 @@ module TestBench
         end
       end
 
+      module Import
+        Error = Class.new(RuntimeError)
+
+        def self.call(event_data, event_class)
+          if event_class.event_type != event_data.type
+            raise Error, "Event class #{event_class} doesn't match EventData type #{event_data.type.inspect}"
+          end
+
+          process_id = event_data.process_id
+          time = event_data.time
+          data = event_data.data
+
+          metadata = Metadata.new(process_id, time)
+
+          event_class.new(*data, metadata)
+        end
+      end
+
       Metadata = Struct.new(:process_id, :time)
     end
   end
