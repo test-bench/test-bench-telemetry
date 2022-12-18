@@ -2,13 +2,15 @@ module TestBench
   class Telemetry
     module Controls
       module EventData
-        def self.example(type: nil, process_id: nil)
+        def self.example(type: nil, process_id: nil, time: nil)
           type ||= self.type
           process_id ||= self.process_id
+          time ||= self.time
 
           event_data = Telemetry::EventData.new
           event_data.type = type
           event_data.process_id = process_id
+          event_data.time = time
           event_data
         end
 
@@ -24,12 +26,17 @@ module TestBench
           ProcessID.example
         end
 
+        def self.time
+          Time.example
+        end
+
         module Random
-          def self.example(type: nil, process_id: nil)
+          def self.example(type: nil, process_id: nil, time: nil)
             type ||= Type.random
             process_id ||= ProcessID.random
+            time ||= Time.random
 
-            EventData.example(type:, process_id:)
+            EventData.example(type:, process_id:, time:)
           end
         end
 
@@ -48,11 +55,14 @@ module TestBench
         end
 
         module Text
-          def self.example(type: nil, process_id: nil)
+          def self.example(type: nil, process_id: nil, time: nil)
             type ||= EventData.type
             process_id ||= EventData.process_id
+            time ||= EventData.time
 
-            "#{type}\t#{process_id}\r\n"
+            time_iso8601 = Time::ISO8601.example(time)
+
+            "#{type}\t#{process_id}\t#{time_iso8601}\r\n"
           end
 
           module Malformed
