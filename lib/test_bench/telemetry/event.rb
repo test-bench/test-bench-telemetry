@@ -1,8 +1,8 @@
 module TestBench
   class Telemetry
     module Event
-      def self.define(&blk)
-        Struct.new(:metadata) do
+      def self.define(*attributes, &blk)
+        Struct.new(*attributes, :metadata) do
           include Event
 
           if not blk.nil?
@@ -24,6 +24,10 @@ module TestBench
 
       def event_name
         self.class.event_name
+      end
+
+      def data
+        values[0...-1]
       end
 
       module EventType
@@ -51,6 +55,17 @@ module TestBench
           end
 
           underscore_cased.to_sym
+        end
+      end
+
+      module Export
+        def self.call(event)
+          event_data = EventData.new
+          event_data.type = event.event_type
+          event_data.data = event.data
+          event_data.process_id = event.metadata.process_id
+          event_data.time = event.metadata.time
+          event_data
         end
       end
 
