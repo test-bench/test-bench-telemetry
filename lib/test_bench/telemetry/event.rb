@@ -15,6 +15,7 @@ module TestBench
         cls.class_exec do
           extend EventType
           extend EventName
+          extend Build
         end
       end
 
@@ -66,6 +67,14 @@ module TestBench
           event_data.process_id = event.metadata.process_id
           event_data.time = event.metadata.time
           event_data
+        end
+      end
+
+      module Build
+        def build(*attributes, process_id: nil, time: nil)
+          metadata = Metadata.new(process_id, time)
+
+          new(*attributes, metadata)
         end
       end
 
