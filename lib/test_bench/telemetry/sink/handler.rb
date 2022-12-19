@@ -5,9 +5,16 @@ module TestBench
         def self.included(cls)
           cls.class_exec do
             include Sink
+            include Receive
 
             extend HandlerMethod
             extend HandleMacro
+          end
+        end
+
+        module Receive
+          def receive(event_data)
+            handle(event_data)
           end
         end
 
