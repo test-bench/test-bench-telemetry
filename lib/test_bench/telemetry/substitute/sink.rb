@@ -6,6 +6,20 @@ module TestBench
 
         include Telemetry::Sink
 
+        def self.read(path)
+          file_text = ::File.read(path)
+
+          instance = new
+
+          file_text.each_line do |event_data_text|
+            event_data = Telemetry::EventData.load(event_data_text)
+
+            instance.receive(event_data)
+          end
+
+          instance
+        end
+
         def received_events
           @received_events ||= []
         end
