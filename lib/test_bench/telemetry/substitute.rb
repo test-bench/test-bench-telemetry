@@ -19,6 +19,8 @@ module TestBench
           instance.register(instance.sink)
           instance
         end
+
+        def recorded?(...) = sink.received?(...)
       end
     end
   end
