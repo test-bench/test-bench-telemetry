@@ -39,5 +39,11 @@ module TestBench
     def self.process_id
       ::Process.pid
     end
+
+    def get_sinks(sink_class)
+      sinks.select do |sink|
+        sink.instance_of?(sink_class)
+      end
+    end
   end
 end
