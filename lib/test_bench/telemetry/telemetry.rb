@@ -1,5 +1,7 @@
 module TestBench
   class Telemetry
+    GetError = Class.new(RuntimeError)
+
     def sinks
       @sinks ||= []
     end
@@ -38,6 +40,16 @@ module TestBench
 
     def self.process_id
       ::Process.pid
+    end
+
+    def get_sink(sink_class)
+      sink, *other_sinks = get_sinks(sink_class)
+
+      if other_sinks.any?
+        raise GetError, "Multiple sinks match: #{sink_class.inspect}"
+      end
+
+      sink
     end
 
     def get_sinks(sink_class)
