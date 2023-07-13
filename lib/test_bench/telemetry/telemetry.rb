@@ -42,6 +42,20 @@ module TestBench
       ::Process.pid
     end
 
+    def registered?(sink_or_sink_class)
+      if sink_or_sink_class.is_a?(Sink)
+        sink = sink_or_sink_class
+
+        sinks.include?(sink)
+      else
+        sink_class = sink_or_sink_class
+
+        sink = get_sink(sink_class)
+
+        !sink.nil?
+      end
+    end
+
     def get_sink(sink_class)
       sink, *other_sinks = get_sinks(sink_class)
 
