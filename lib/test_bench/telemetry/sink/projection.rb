@@ -4,6 +4,9 @@ module TestBench
       module Projection
         def self.included(cls)
           cls.class_exec do
+            include Sink
+            include Receive
+
             extend ReceiverNameMacro
 
             extend ApplyMethod
@@ -15,6 +18,12 @@ module TestBench
 
         def initialize(receiver)
           @receiver = receiver
+        end
+
+        module Receive
+          def receive(event_data)
+            apply(event_data)
+          end
         end
 
         def apply(event_or_event_data)
