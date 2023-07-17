@@ -7,6 +7,7 @@ module TestBench
             extend ReceiverNameMacro
 
             extend ApplyMethod
+            extend ApplyMacro
           end
         end
 
@@ -33,6 +34,23 @@ module TestBench
             end
           end
           alias :receiver_name :receiver_name_macro
+        end
+
+        module ApplyMacro
+          def apply_macro(event_class, &block)
+            event_registry.register(event_class)
+
+            event_type = event_class.event_type
+
+            apply_method = ApplyMethod.get(event_type)
+
+            define_method(apply_method, &block)
+          end
+          alias :apply :apply_macro
+
+          def event_registry
+            @event_registry ||= Handler::EventRegistry.new
+          end
         end
 
         module ApplyMethod
