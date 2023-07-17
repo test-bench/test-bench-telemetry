@@ -13,3 +13,5 @@ require 'test_bench/telemetry/controls/event/metadata'
 
 require 'test_bench/telemetry/controls/sink'
 require 'test_bench/telemetry/controls/handler'
+require 'test_bench/telemetry/controls/projection'
+require 'test_bench/telemetry/controls/projection/receiver'
