@@ -17,6 +17,12 @@ module TestBench
           @receiver = receiver
         end
 
+        def apply?(...)
+          apply_method = apply_method(...)
+
+          not apply_method.nil?
+        end
+
         def apply_method(event_or_event_data)
           apply_method = self.class.apply_method(event_or_event_data)
 
