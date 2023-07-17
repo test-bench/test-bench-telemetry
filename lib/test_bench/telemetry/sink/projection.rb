@@ -17,6 +17,45 @@ module TestBench
           @receiver = receiver
         end
 
+        def apply(event_or_event_data)
+          applies = apply?(event_or_event_data)
+
+          if applies
+            if event_or_event_data.is_a?(Event)
+              event = event_or_event_data
+            else
+              event_data = event_or_event_data
+              event_type = event_data.type
+              event_class = self.class.event_registry.get(event_type)
+
+              event = Event::Import.(event_data, event_class)
+            end
+
+            apply_method = apply_method(event)
+
+            if method(apply_method).parameters.any?
+              __send__(apply_method, event)
+            else
+              __send__(apply_method)
+            end
+
+            event
+          elsif respond_to?(:apply_event_data)
+            if event_or_event_data.is_a?(Event)
+              event_data = Event::Export.(event_or_event_data)
+            else
+              event_data = event_or_event_data
+            end
+
+            apply_event_data(event_data)
+
+            event_data
+          else
+            nil
+          end
+        end
+        alias :call :apply
+
         def apply?(...)
           apply_method = apply_method(...)
 
