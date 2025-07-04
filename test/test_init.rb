@@ -12,4 +12,5 @@ require 'pp'
 
 require 'test_bench_bootstrap'; TestBenchBootstrap.activate
 
-#TestBench::ImportConstants.(TestBench::Telemetry)
+TestBenchBootstrap::ImportConstants.(TestBench::Telemetry)
+TestBenchBootstrap::ImportConstants.(TestBench)

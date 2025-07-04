@@ -1,12 +1,10 @@
 # Test Bench Telemetry
 
-*[Summary goes here]*
-
-*[Description goes here]*
+Telemetry publication and subscription for TestBench.
 
 ## Documentation
 
-*[Link to documentation goes here]*
+See the [TestBench website](http://test-bench.software) for more information, examples, and user guides.
 
 ## License
 
