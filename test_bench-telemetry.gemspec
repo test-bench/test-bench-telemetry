@@ -30,5 +30,5 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'test_bench-random'
 
-  spec.add_development_dependency 'test_bench_bootstrap'
+  spec.add_development_dependency 'test_bench-bootstrap'
 end
