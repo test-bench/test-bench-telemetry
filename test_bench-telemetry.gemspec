@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |spec|
   spec.name = 'test_bench-telemetry'
-  spec.version = '3.0.0.0.pre.1'
+  spec.version = '3.0.0.0'
 
   spec.summary = "Telemetry publication and subscription for TestBench"
   spec.description = <<~TEXT.each_line(chomp: true).map(&:strip).join(' ')
